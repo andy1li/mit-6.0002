@@ -143,7 +143,6 @@ def compare_cow_transport_algorithms(cow_file: str) -> None:
 
 
 if __name__ == '__main__':
-
     cow_file = "ps1_cow_data.txt"
     # pprint(load_cows(cow_file))
 

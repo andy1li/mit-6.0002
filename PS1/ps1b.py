@@ -17,7 +17,7 @@ Memo = Dict[int, int]
 def dp_make_weight(
     egg_weights: Eggs, 
     target_weight: int, 
-    memo : Memo = {x: x for x in range(5)} ) -> int:
+    memo: Memo = {x: x for x in range(5)} ) -> int:
     """
     Find number of eggs to bring back, using the smallest number of eggs. Assumes there is
     an infinite supply of eggs of each weight, and there is always a egg of value 1.
@@ -32,14 +32,16 @@ def dp_make_weight(
     if target_weight in memo:
         return memo[target_weight]
 
-    for weight in sorted(egg_weights, reverse=True):
-        if weight <= target_weight:
-            result = 1 + dp_make_weight(egg_weights, target_weight - weight, memo)
-            memo[target_weight] = result
-            # print(target_weight, weight, memo)
-            return result
+    min_value = min(
+        dp_make_weight(egg_weights, target_weight - weight, memo)
+        for weight in sorted(egg_weights)
+        if  weight <= target_weight
+    )
+    
+    memo[target_weight] = 1 + min_value
+    # print(target_weight, memo)
 
-    raise RuntimeError
+    return memo[target_weight]
             
 # EXAMPLE TESTING CODE, feel free to add more if you'd like
 if __name__ == '__main__':
